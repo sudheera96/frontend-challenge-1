@@ -71,6 +71,7 @@ export default function MainPage() {
   return (
     <main className="min-h-full bg-gray-50 px-6 py-8">
       <div className="mx-auto max-w-7xl space-y-6">
+        {/* Header */}
         <header className="rounded-2xl bg-white p-8 shadow-sm">
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div>
@@ -91,6 +92,7 @@ export default function MainPage() {
             <div className="rounded-xl border border-green-200 bg-green-50 px-5 py-4">
               <div className="flex items-center gap-2">
                 <span className="h-2.5 w-2.5 rounded-full bg-green-600" />
+
                 <span className="font-semibold text-green-800">
                   WebMCP Ready
                 </span>
@@ -103,9 +105,11 @@ export default function MainPage() {
           </div>
         </header>
 
+        {/* Summary cards */}
         <section className="grid gap-4 md:grid-cols-3">
           <div className="rounded-xl bg-white p-5 shadow-sm">
             <p className="text-sm text-gray-500">Matching Claims</p>
+
             <p className="mt-2 text-3xl font-bold text-gray-900">
               {filteredClaims.length}
             </p>
@@ -113,8 +117,10 @@ export default function MainPage() {
 
           <div className="rounded-xl bg-white p-5 shadow-sm">
             <p className="text-sm text-gray-500">Total Allowed</p>
+
             <p className="mt-2 text-3xl font-bold text-gray-900">
-              ${totalAllowed.toLocaleString(undefined, {
+              $
+              {totalAllowed.toLocaleString(undefined, {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
               })}
@@ -123,8 +129,10 @@ export default function MainPage() {
 
           <div className="rounded-xl bg-white p-5 shadow-sm">
             <p className="text-sm text-gray-500">Total Paid</p>
+
             <p className="mt-2 text-3xl font-bold text-gray-900">
-              ${totalPaid.toLocaleString(undefined, {
+              $
+              {totalPaid.toLocaleString(undefined, {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
               })}
@@ -132,6 +140,82 @@ export default function MainPage() {
           </div>
         </section>
 
+        {/* AI Agent capabilities */}
+        <section className="rounded-2xl bg-white p-6 shadow-sm">
+          <div className="mb-5">
+            <p className="text-sm font-semibold uppercase tracking-wider text-green-700">
+              AI Agent
+            </p>
+
+            <h2 className="mt-1 text-xl font-semibold text-gray-900">
+              WebMCP Agent Capabilities
+            </h2>
+
+            <p className="mt-1 text-sm text-gray-500">
+              AI agents can use these tools to work with the same healthcare
+              claims data available to people.
+            </p>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-3">
+            <div className="rounded-xl border border-gray-200 p-5">
+              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-green-50 text-lg">
+                🔎
+              </div>
+
+              <h3 className="font-semibold text-gray-900">
+                Search Claims
+              </h3>
+
+              <p className="mt-2 text-sm leading-6 text-gray-500">
+                Find claims using provider, procedure code, or place of
+                service.
+              </p>
+
+              <p className="mt-3 font-mono text-xs text-green-700">
+                search_healthcare_claims
+              </p>
+            </div>
+
+            <div className="rounded-xl border border-gray-200 p-5">
+              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-green-50 text-lg">
+                💰
+              </div>
+
+              <h3 className="font-semibold text-gray-900">
+                Compare Prices
+              </h3>
+
+              <p className="mt-2 text-sm leading-6 text-gray-500">
+                Compare billed, allowed, and paid amounts for a procedure.
+              </p>
+
+              <p className="mt-3 font-mono text-xs text-green-700">
+                compare_healthcare_prices
+              </p>
+            </div>
+
+            <div className="rounded-xl border border-gray-200 p-5">
+              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-green-50 text-lg">
+                📊
+              </div>
+
+              <h3 className="font-semibold text-gray-900">
+                Provider Summary
+              </h3>
+
+              <p className="mt-2 text-sm leading-6 text-gray-500">
+                Summarize provider claims, spending, and procedures.
+              </p>
+
+              <p className="mt-3 font-mono text-xs text-green-700">
+                summarize_provider_claims
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Search */}
         <section className="rounded-2xl bg-white p-6 shadow-sm">
           <div className="mb-5">
             <h2 className="text-xl font-semibold text-gray-900">
@@ -212,6 +296,7 @@ export default function MainPage() {
           </div>
         </section>
 
+        {/* Claims table */}
         <section className="overflow-hidden rounded-2xl bg-white shadow-sm">
           <div className="border-b border-gray-200 px-6 py-5">
             <div className="flex items-center justify-between">
@@ -229,8 +314,10 @@ export default function MainPage() {
                 <p className="text-xs uppercase tracking-wide text-gray-400">
                   Total Billed
                 </p>
+
                 <p className="font-semibold text-gray-800">
-                  ${totalBilled.toLocaleString(undefined, {
+                  $
+                  {totalBilled.toLocaleString(undefined, {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2,
                   })}
@@ -268,7 +355,10 @@ export default function MainPage() {
 
                 <tbody className="divide-y divide-gray-100">
                   {filteredClaims.slice(0, 50).map((claim) => (
-                    <tr key={claim.claimId} className="hover:bg-gray-50">
+                    <tr
+                      key={claim.claimId}
+                      className="hover:bg-gray-50"
+                    >
                       <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
                         {claim.providerName}
                       </td>
@@ -282,19 +372,22 @@ export default function MainPage() {
                       </td>
 
                       <td className="whitespace-nowrap px-6 py-4 text-gray-700">
-                        ${claim.billed.toLocaleString(undefined, {
+                        $
+                        {claim.billed.toLocaleString(undefined, {
                           minimumFractionDigits: 2,
                         })}
                       </td>
 
                       <td className="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
-                        ${claim.allowed.toLocaleString(undefined, {
+                        $
+                        {claim.allowed.toLocaleString(undefined, {
                           minimumFractionDigits: 2,
                         })}
                       </td>
 
                       <td className="whitespace-nowrap px-6 py-4 text-gray-700">
-                        ${claim.paid.toLocaleString(undefined, {
+                        $
+                        {claim.paid.toLocaleString(undefined, {
                           minimumFractionDigits: 2,
                         })}
                       </td>
