@@ -101,7 +101,7 @@ export async function registerWebMCPTools() {
     name: "compare_healthcare_prices",
     title: "Compare Healthcare Prices",
     description:
-      "Compare healthcare claim prices for a procedure. Returns the number of claims and average, minimum, and maximum billed, allowed, and paid amounts.",
+      "Compare healthcare claim prices for a procedure. Returns claim count, average, minimum, and maximum billed, allowed, and paid amounts, plus calculated differences between billed, allowed, and paid amounts.",
     inputSchema: {
       type: "object",
       properties: {
@@ -140,27 +140,55 @@ export async function registerWebMCPTools() {
       const allowedValues = matches.map((claim) => claim.allowed);
       const paidValues = matches.map((claim) => claim.paid);
 
+      const totalBilled = billedValues.reduce(
+        (sum, value) => sum + value,
+        0
+      );
+
+      const totalAllowed = allowedValues.reduce(
+        (sum, value) => sum + value,
+        0
+      );
+
+      const totalPaid = paidValues.reduce(
+        (sum, value) => sum + value,
+        0
+      );
+
       const average = (values: number[]) =>
         values.reduce((sum, value) => sum + value, 0) / values.length;
 
       return JSON.stringify({
         procedureCode,
         matchCount: matches.length,
+
         billed: {
           average: average(billedValues),
           minimum: Math.min(...billedValues),
           maximum: Math.max(...billedValues),
+          total: totalBilled,
         },
+
         allowed: {
           average: average(allowedValues),
           minimum: Math.min(...allowedValues),
           maximum: Math.max(...allowedValues),
+          total: totalAllowed,
         },
+
         paid: {
           average: average(paidValues),
           minimum: Math.min(...paidValues),
           maximum: Math.max(...paidValues),
+          total: totalPaid,
         },
+
+        paymentBreakdown: {
+          billedMinusAllowed: totalBilled - totalAllowed,
+          allowedMinusPaid: totalAllowed - totalPaid,
+          billedMinusPaid: totalBilled - totalPaid,
+        },
+
         providers: [
           ...new Set(matches.map((claim) => claim.providerName)),
         ],
