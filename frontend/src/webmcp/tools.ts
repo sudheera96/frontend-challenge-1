@@ -161,7 +161,82 @@ export async function registerWebMCPTools() {
           minimum: Math.min(...paidValues),
           maximum: Math.max(...paidValues),
         },
-        providers: [...new Set(matches.map((claim) => claim.providerName))],
+        providers: [
+          ...new Set(matches.map((claim) => claim.providerName)),
+        ],
+      });
+    },
+  });
+
+  await document.modelContext.registerTool({
+    name: "summarize_provider_claims",
+    title: "Summarize Provider Claims",
+    description:
+      "Summarize healthcare claims for a provider. Returns claim count, total billed, total allowed, total paid, average allowed amount, and procedures used by the provider.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        providerName: {
+          type: "string",
+          description: "Provider name to summarize.",
+        },
+      },
+      required: ["providerName"],
+      additionalProperties: false,
+    },
+    annotations: {
+      readOnlyHint: true,
+    },
+    execute: async ({
+      providerName,
+    }: {
+      providerName: string;
+    }) => {
+      const claims = await getClaims();
+
+      const matches = claims.filter((claim) =>
+        claim.providerName
+          .toLowerCase()
+          .includes(providerName.toLowerCase())
+      );
+
+      if (matches.length === 0) {
+        return JSON.stringify({
+          providerName,
+          matchCount: 0,
+          message: "No claims found for this provider.",
+        });
+      }
+
+      const totalBilled = matches.reduce(
+        (sum, claim) => sum + claim.billed,
+        0
+      );
+
+      const totalAllowed = matches.reduce(
+        (sum, claim) => sum + claim.allowed,
+        0
+      );
+
+      const totalPaid = matches.reduce(
+        (sum, claim) => sum + claim.paid,
+        0
+      );
+
+      const averageAllowed = totalAllowed / matches.length;
+
+      const procedures = [
+        ...new Set(matches.map((claim) => claim.procedureCode)),
+      ];
+
+      return JSON.stringify({
+        providerName: matches[0].providerName,
+        matchCount: matches.length,
+        totalBilled,
+        totalAllowed,
+        totalPaid,
+        averageAllowed,
+        procedures,
       });
     },
   });
