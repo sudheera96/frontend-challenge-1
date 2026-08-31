@@ -97,5 +97,74 @@ export async function registerWebMCPTools() {
     },
   });
 
+  await document.modelContext.registerTool({
+    name: "compare_healthcare_prices",
+    title: "Compare Healthcare Prices",
+    description:
+      "Compare healthcare claim prices for a procedure. Returns the number of claims and average, minimum, and maximum billed, allowed, and paid amounts.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        procedureCode: {
+          type: "string",
+          description: "Procedure code to analyze.",
+        },
+      },
+      required: ["procedureCode"],
+      additionalProperties: false,
+    },
+    annotations: {
+      readOnlyHint: true,
+    },
+    execute: async ({
+      procedureCode,
+    }: {
+      procedureCode: string;
+    }) => {
+      const claims = await getClaims();
+
+      const matches = claims.filter(
+        (claim) =>
+          claim.procedureCode.toLowerCase() === procedureCode.toLowerCase()
+      );
+
+      if (matches.length === 0) {
+        return JSON.stringify({
+          procedureCode,
+          matchCount: 0,
+          message: "No claims found for this procedure code.",
+        });
+      }
+
+      const billedValues = matches.map((claim) => claim.billed);
+      const allowedValues = matches.map((claim) => claim.allowed);
+      const paidValues = matches.map((claim) => claim.paid);
+
+      const average = (values: number[]) =>
+        values.reduce((sum, value) => sum + value, 0) / values.length;
+
+      return JSON.stringify({
+        procedureCode,
+        matchCount: matches.length,
+        billed: {
+          average: average(billedValues),
+          minimum: Math.min(...billedValues),
+          maximum: Math.max(...billedValues),
+        },
+        allowed: {
+          average: average(allowedValues),
+          minimum: Math.min(...allowedValues),
+          maximum: Math.max(...allowedValues),
+        },
+        paid: {
+          average: average(paidValues),
+          minimum: Math.min(...paidValues),
+          maximum: Math.max(...paidValues),
+        },
+        providers: [...new Set(matches.map((claim) => claim.providerName))],
+      });
+    },
+  });
+
   toolsRegistered = true;
 }
