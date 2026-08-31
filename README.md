@@ -1,5 +1,4 @@
-# ClearHealth AI — WebMCP Healthcare Price Transparency Agent
-
+# ClearHealth AI: Making Healthcare Prices Agent-Ready | WebMCP
 ## Overview
 
 ClearHealth AI is a healthcare price-transparency application enhanced with WebMCP, allowing AI agents to interact directly with structured healthcare claims data through well-defined tools.
@@ -11,30 +10,22 @@ Instead of requiring an AI agent to navigate the user interface, guess which con
 ## Live Application
 
 Production:
-
-YOUR_VERCEL_URL
+[Live App](https://frontend-challenge-1-delta.vercel.app/)
 
 The application is deployed on Vercel and can be tested using a WebMCP-enabled browser.
 
 ---
 
-# Why WebMCP?
+# ## Why WebMCP is a Strong Fit
 
-Healthcare price information can be difficult to search, understand, and compare efficiently.
+Healthcare price transparency is a strong fit for WebMCP because users often need to search, compare, and summarize structured pricing information rather than simply browse a webpage. Traditional web interfaces are designed primarily for humans, requiring an AI agent to understand the interface and determine how to perform these tasks.
 
-A person can use a healthcare application visually, but an AI agent traditionally has to infer how the application works from the interface.
+This project exposes three meaningful healthcare capabilities through WebMCP: searching claims, comparing procedure prices, and summarizing provider claims. These operations have clearly defined inputs and structured outputs, making them natural capabilities for an AI agent to invoke.
 
-WebMCP provides a better approach by allowing the application to explicitly expose meaningful capabilities that an AI agent can call.
+For example, instead of an agent navigating the application to compare prices for a procedure, it can call `compare_healthcare_prices` with a procedure code and receive the relevant billed, allowed, and paid statistics. Similarly, an agent can search claims or obtain a provider summary without relying on UI navigation or screen scraping.
 
-For example, instead of an agent trying to determine which interface control should be used to find claims for a provider, the website can expose a structured tool:
+This creates a human-and-agent experience where people can continue using the visual healthcare application while agents can directly access the application's meaningful capabilities. WebMCP therefore turns the website from a human-only interface into an interface that can be used by both humans and AI agents.
 
-`search_healthcare_claims`
-
-The agent knows what the tool does, what inputs it accepts, and what structured information it returns.
-
-This makes the healthcare application more accessible to agents and creates a more reliable way for agents to work with healthcare price information.
-
----
 
 # What People and Agents Can Do Together
 
@@ -62,7 +53,7 @@ The application is designed around a shared human-and-agent experience.
 
 This allows a user to ask an AI agent a healthcare price question while the agent uses the website's structured capabilities to retrieve and analyze the underlying claims data.
 
----
+
 
 # WebMCP Tools
 
@@ -405,5 +396,5 @@ It is a technical demonstration and should not be used as a source for real-worl
 
 ## Live Demo
 
-[Live Demo](https://frontend-challenge-1-delta.vercel.app)
+[Live Demo](https://youtu.be/iwQJJwHI-lQ)
 
