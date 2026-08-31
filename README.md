@@ -1,112 +1,411 @@
-# Coding Challenge: MRF Generation from Claims File OON Rates
+# ClearHealth AI — WebMCP Healthcare Price Transparency Agent
 
-## Introduction
+## Overview
 
-As part of the Transparency in Coverage (TiC) regulations, health insurers are required to publish their allowed amounts monthly in a machine-readable format. This challenge involves building a React application that facilitates the generation of these Machine-Readable Files (MRFs) from a CSV file containing claims data.
+ClearHealth AI is a healthcare price-transparency application enhanced with WebMCP, allowing AI agents to interact directly with structured healthcare claims data through well-defined tools.
 
-You will create an interface that allows users to upload, parse, validate, and approve claims data. The approved data will then be sent to a backend API to generate JSON MRF files, which will be stored on the server on disk.
+The project originally began as a healthcare claims and Machine-Readable File (MRF) coding challenge. It has been extended for the WebMCP Challenge to demonstrate how an existing healthcare application can become more useful when both people and AI agents can interact with the same underlying healthcare data.
 
-## ⚠️ Important Note for Candidates
+Instead of requiring an AI agent to navigate the user interface, guess which controls to use, or extract information from the page, the application exposes structured healthcare capabilities through WebMCP.
 
-This coding challenge is designed to identify exceptional talent and is not intended for everyone. We are looking for candidates who can demonstrate outstanding problem-solving skills, efficient coding practices, and a deep understanding of modern web dev concepts.
+## Live Application
 
-**Time Constraint:** While we understand that creating a full-featured application takes time, we expect top candidates to be able to complete a significant portion of this challenge within a couple of hours. Your ability to prioritize features, make smart design decisions, and produce high-quality code quickly is key.
+Production:
 
-**Focus on Core Functionality:** If you find yourself running out of time, focus on implementing the core features and demonstrating your coding prowess rather than trying to complete every aspect of the challenge. We value quality over quantity.
+YOUR_VERCEL_URL
 
-**Showcase Your Skills:** Use this opportunity to highlight your strengths. If you excel in certain areas (e.g., state management, API design, UI/UX), make sure to emphasize those in your implementation.
+The application is deployed on Vercel and can be tested using a WebMCP-enabled browser.
 
-Remember, this challenge is as much about how you approach problem-solving and manage your time as it is about the final product. Good luck!
+---
 
-## 🎯 Objectives
+# Why WebMCP?
 
-- **Build a user-friendly interface** for uploading and managing claims data.
-- **Parse and validate** the uploaded CSV claims file.
-- **Present the data** to users for approval before processing.
-- **Interact with a simple backend API** to generate and store JSON MRF files.
-- **Fetch and display** the list of MRF files for each customer.
-- **Expose a public page** displaying MRF files.
-- **Document the application design** and functionality.
+Healthcare price information can be difficult to search, understand, and compare efficiently.
 
-## 📝 Submission Guidelines
+A person can use a healthcare application visually, but an AI agent traditionally has to infer how the application works from the interface.
 
-- **Provide a forked repository link** containing your project. Make sure it is public or add @mihilmy as a collaborator.
-- Include a **`README.md`** file with clear instructions on how to set up and run your application locally.
-- Ensure all dependencies are listed, and any setup scripts or configuration files are included.
-- Your code should be **well-organized** and **easy to navigate**.
-- Please look into the [RUBRIC.md](./RUBRIC.md) for our evaluation criteria
+WebMCP provides a better approach by allowing the application to explicitly expose meaningful capabilities that an AI agent can call.
 
-## 🛠️ Tools and Libraries to Use
+For example, instead of an agent trying to determine which interface control should be used to find claims for a provider, the website can expose a structured tool:
 
-- **UI Components**: [Mantine](https://mantine.dev/) (do **NOT** design components from scratch).
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/) (use Tailwind classes for styling).
-- **State Management**: [MobX](https://mobx.js.org/README.html) (use one file for all state management).
-- **CSV Parsing**: [Papaparse](https://www.papaparse.com/) for parsing CSV files.
-- **Data Tables**: [AG Grid](https://www.ag-grid.com/) for displaying data in tables.
-- **Routing**: [React Router](https://reactrouter.com/) for handling routes.
-- **Schema Validation**: [Zod](https://zod.dev/) for validating claims data.
-- **API Interaction**: Use `fetch` or any other library for API calls.
-- **Storage**: Store generated MRF files on the server in a local folder.
+`search_healthcare_claims`
 
-## 📋 Instructions
+The agent knows what the tool does, what inputs it accepts, and what structured information it returns.
 
-### 1. TiC Compliance for Allowed Amounts Publication
+This makes the healthcare application more accessible to agents and creates a more reliable way for agents to work with healthcare price information.
 
-- Understand that under the TiC regulations, health insurers must publish their allowed amounts monthly in a machine-readable JSON format. The format is publicly documented [here](https://github.com/CMSgov/price-transparency-guide/tree/master/schemas/allowed-amounts).
-- This application will aid in generating these JSON MRF files from a CSV file containing claims data.
+---
 
-### 2. Build an Interface for CSV Upload
+# What People and Agents Can Do Together
 
-- **Create a user interface** that allows users to upload a CSV file of claims.
-- **Use Mantine components** for building the interface (do not design components from scratch).
-- The interface should include:
-  - A file upload button.
-  - Display of the selected file name.
-  - Error handling for incorrect file formats.
-  - A table of all the claims that the user will approve.
+The application is designed around a shared human-and-agent experience.
 
-### 3. Parse, Validate, and Present Claims Data
+## People can
 
-- **Use Papaparse** to parse the input CSV file on the frontend. A sample has been included under `data/sample.csv`
-- **Validate the claims data** against a defined schema (you need to define a high-quality schema for the claims data).
-- **Handle parsing and validation errors** gracefully by informing the user of any issues.
-- **Present the parsed and validated data** to the user using AG Grid in a tabular format.
-- Allow the user to **approve** claims before submission.
-- BONUS: Allow the user to **edit** or **remove** claims as well.
-- BONUS: Secure this page with a dummy authentication system. Only authenticated users can access this page.
+- Explore healthcare claims through the web interface.
+- Search healthcare information.
+- Compare procedure prices.
+- Review billed, allowed, and paid amounts.
+- Examine provider-level information.
+- Understand differences between billed, allowed, and paid amounts.
 
-### 4. Interact with Backend API for JSON MRF Generation
+## AI agents can
 
-- **Define a high-quality schema** for the data to be sent to the backend API.
-- **Implement a function** to send the approved claims data to the backend API.
-- The backend API will **convert the data into JSON MRF files** and store them on the server in a local folder.
-- The format is publicly documented [here](https://github.com/CMSgov/price-transparency-guide/tree/master/schemas/allowed-amounts). You will simply run averages on each provider, procedure, place of service, billing class combination to generate the file.
-- This is the bulk of the project, I expect you to use good design patterns from here: https://refactoring.guru/design-patterns/catalog to manage the generation of the final file.
-- If there are missing required fields such as TIN. You can ignore them.
+- Search healthcare claims programmatically.
+- Search by provider.
+- Search by procedure code.
+- Search by place of service.
+- Compare healthcare prices for a procedure.
+- Calculate aggregate billed, allowed, and paid amounts.
+- Calculate differences between billed, allowed, and paid amounts.
+- Summarize claims for a provider.
 
-### 5. Fetch and Display List of MRF Files
+This allows a user to ask an AI agent a healthcare price question while the agent uses the website's structured capabilities to retrieve and analyze the underlying claims data.
 
-- **Create an API endpoint** that fetches the list of generated MRF files for each customer.
-- **Display the list** on a page similar to [this example](https://my.clearesthealth.com/mrf/ehs).
-- **Create a public page** that displays the list of MRF files fetched from the API.
+---
 
-### 6. Application Design Documentation
+# WebMCP Tools
 
-- **Create a markdown file (`DESIGN.md`)** that explains the entire application architecture and functionality.
-- Include details about:
-  - Overall application flow.
-  - Components and their responsibilities.
-  - State management using MobX.
-  - Interaction with the backend API.
-  - Routing and navigation.
+The application currently exposes three WebMCP tools.
 
-### 7. Code Organization and Best Practices
+## 1. Search Healthcare Claims
 
-- Organize your code into appropriate folders:
-  - `components/` for reusable components.
-  - `pages/` for page-level components.
-  - `stores/` for MobX state management (use one file for all state management).
-  - `services/` for API calls and backend interaction.
-  - `utils/` for utility functions.
-- **Maintain high code quality** with proper spacing, comments, and meaningful naming conventions.
+### Tool Name
 
+`search_healthcare_claims`
+
+### Purpose
+
+Search the healthcare claims dataset using one or more optional filters.
+
+### Inputs
+
+- `providerName`
+- `procedureCode`
+- `placeOfService`
+
+### Example
+
+```json
+{
+  "providerName": "Michael Poole"
+}
+```
+Here is your text converted into cleanly structured, highly scannable Markdown format.
+### Returns
+The tool returns matching claims including:
+
+* Claim ID
+* Provider name
+* Procedure code
+* Billed amount
+* Allowed amount
+* Paid amount
+* Place of service
+* Service date
+* Claim status
+
+The tool reports the total number of matches and returns up to 50 matching claim records.
+## 2. Compare Healthcare Prices
+### Tool Name
+```
+compare_healthcare_prices
+```
+### Purpose
+Compare healthcare prices for a specific procedure code.
+### Input
+
+* procedureCode
+
+Example:
+```json
+{
+  "procedureCode": "s5301"
+}
+```
+### Returns
+The tool calculates:
+
+* Number of matching claims
+* Billed amounts: Average, Minimum, Maximum, and Total
+* Allowed amounts: Average, Minimum, Maximum, and Total
+* Paid amounts: Average, Minimum, Maximum, and Total
+
+It also calculates:
+
+* Billed minus allowed
+* Allowed minus paid
+* Billed minus paid
+
+The tool returns the providers associated with the procedure.
+
+## 3. Summarize Provider Claims## Tool Name
+```
+summarize_provider_claims
+```
+
+### Purpose
+Provide an aggregate summary of healthcare claims for a provider.
+### Input
+
+* providerName
+
+Example:
+```json
+{
+  "providerName": "Michael Poole"
+}
+```
+### Returns
+
+* Provider name
+* Claim count
+* Total billed amount
+* Total allowed amount
+* Total paid amount
+* Average allowed amount
+* Procedures associated with the provider
+
+## WebMCP Implementation
+The WebMCP implementation is located at:
+```
+ frontend/src/webmcp/tools.ts
+ ```
+The application registers the tools through: 
+```typescript
+document.modelContext.registerTool(...)
+```
+Each tool defines:
+
+* A unique tool name
+* A human-readable title
+* A description
+* A structured input schema
+* A read-only annotation
+* An asynchronous execution function
+
+The application first checks whether WebMCP is available:
+```typescript
+if (!("modelContext" in document)) {
+  console.warn("WebMCP is not available in this browser.");
+  return;
+}
+```
+
+* Data Layer: The healthcare claims data is loaded through the application's claims data layer and reused across tool calls.
+* Read-Only: The tools are read-only and do not modify the underlying healthcare claims dataset.
+
+## Example Agent Workflow
+A user could ask an agent: "Find the claims for Michael Poole."
+
+* The agent can use: search_healthcare_claims
+
+The user could then ask: "How much was billed versus allowed versus paid for procedure s5301?"
+
+* The agent can use: compare_healthcare_prices
+
+The user could then ask: "Give me a summary of Michael Poole's claims."
+
+* The agent can use: summarize_provider_claims
+
+Key Difference: The agent does not have to infer these operations from the user interface. The website explicitly exposes these capabilities as structured tools.
+
+## Healthcare Price Transparency
+The application works with healthcare claims information including:
+
+* Provider
+* Procedure code
+* Place of service
+* Billed amount
+* Allowed amount
+* Paid amount
+* Service date
+* Claim status
+
+Example Claim Instance:
+
+* Provider: Michael Poole
+* Procedure: s5301
+* Place of Service: Outpatient Hospital
+* Billed: $4,703.20
+* Allowed: $2,383.32
+* Paid: $1,054.56
+
+The application calculates financial differences to provide extra context:
+
+* Billed - Allowed
+* Allowed - Paid
+* Billed - Paid
+
+## Original ClearHealth Challenge
+This project originated from a ClearHealth coding challenge focused on healthcare claims and Machine-Readable Files (MRFs).
+The original challenge focuses on:
+
+* Claims CSV upload
+* CSV parsing
+* Claims validation
+* Claims approval
+* Healthcare claims presentation
+* MRF generation
+* MRF file listing
+* Public MRF access
+* Application architecture and documentation
+
+Documentation Links:
+
+* The original challenge documentation remains available in: RUBRIC.md
+* The application design documentation is available in: DESIGN.md
+
+Note: The WebMCP functionality was added as an extension of the original healthcare claims application for the WebMCP Challenge.
+
+## Technology Stack
+
+| Layer | Technologies Used |
+|---|---|
+| Frontend | React, TypeScript, Vite, React Router, Mantine, Tailwind CSS |
+| Healthcare Data | Structured healthcare claims data, CSV-based sample claims data, PapaParse |
+| WebMCP | WebMCP, document.modelContext, document.modelContext.registerTool() |
+| Deployment | Vercel |
+
+## Project Structure
+
+frontend-challenge-1/
+│
+├── backend/
+│
+├── data/
+│
+├── frontend/
+│   ├── public/
+│   │   └── sample.csv
+│   │
+│   └── src/
+│       ├── data/
+│       │   └── claims.ts
+│       │
+│       ├── pages/
+│       │
+│       ├── webmcp/
+│       │   └── tools.ts
+│       │
+│       ├── App.tsx
+│       └── routes.tsx
+│
+├── DESIGN.md
+├── LICENSE
+├── README.md
+└── RUBRIC.md
+
+## Running Locally## Prerequisites
+
+* Node.js
+* npm
+
+## Install Dependencies
+From the repository root:
+```
+npm install
+```
+Then install the frontend dependencies:
+```
+cd frontend
+npm install
+```
+## Start the Frontend
+From the frontend directory:
+```
+npm run dev
+```
+Vite will provide a local development URL.
+## Production Build
+From the frontend directory:
+```
+npm run build
+```
+
+* The production build is generated in: frontend/build/
+* The build configuration is defined in: frontend/vite.config.ts
+
+## Testing WebMCP
+WebMCP can be tested using a browser that supports WebMCP. The application registers its tools through:
+```typescript
+await document.modelContext.getTools()
+```
+The available tools should include:
+
+   1. search_healthcare_claims
+   2. compare_healthcare_prices
+   3. summarize_provider_claims
+
+The tools can then be executed through the browser's WebMCP testing capabilities. For Google Chrome testing, enable WebMCP using the appropriate WebMCP testing configuration.
+
+## Production Verification
+The deployed application has been tested on the public Vercel deployment. The following WebMCP capabilities have been verified:
+
+## 1. Search Healthcare Claims (search_healthcare_claims)
+Successfully returned a healthcare claim for a provider.
+
+* Provider: Michael Poole
+* Procedure: s5301
+* Billed: $4,703.20
+* Allowed: $2,383.32
+* Paid: $1,054.56
+* Place of Service: Outpatient Hospital
+* Claim Status: Payable
+
+## 2. Compare Healthcare Prices (compare_healthcare_prices)
+Successfully returned: Billed/Allowed/Paid amounts, Average/Minimum/Maximum/Total values, payment-difference calculations, and associated providers.
+## 3. Summarize Provider Claims (summarize_provider_claims)
+Successfully returned: Provider information, claim count, total billed, total allowed, total paid, average allowed, and procedure information.
+
+## Design Documentation
+For a detailed explanation of the application's architecture and functionality, see DESIGN.md. It covers:
+
+* Application architecture & flow
+* Frontend structure & routing
+* Data handling
+* WebMCP integration & tool responsibilities
+* Error handling
+* Deployment & future enhancements
+
+## Open Source
+This project is released under the MIT License. See LICENSE.
+
+## Hackathon Goal
+This project explores how healthcare applications can become more useful when they are designed for both humans and AI agents. The goal is not simply to add an AI interface to an existing healthcare application.
+Instead, the application exposes meaningful healthcare capabilities directly to AI agents through WebMCP. This allows agents to interact with structured healthcare claims data while people remain in control of the overall experience.
+
+## Why This Matters
+
+Healthcare price transparency produces valuable data, but valuable data is only useful when people and systems can efficiently access and understand it. WebMCP creates an interface between the healthcare application and AI agents.
+Instead of forcing an agent to navigate a visual interface, the website provides explicit capabilities for searching claims, comparing prices, and summarizing providers. This makes the application more suitable for agent-assisted healthcare information discovery.
+
+## Limitations
+This project is a demonstration of WebMCP-enabled healthcare price transparency. The current claims dataset is sample/demo data and should not be interpreted as a complete representation of real-world healthcare pricing.
+
+Production implementations would require additional considerations including:
+
+* Authentication and authorization
+* Data privacy
+* Access controls
+* Secure API communication
+* Data minimization
+* Audit logging
+* Healthcare regulatory requirements
+* Larger-scale data processing
+* Production monitoring
+
+## Disclaimer
+
+This project uses sample healthcare claims data for demonstration purposes.
+
+It is a technical demonstration and should not be used as a source for real-world medical, insurance, billing, or financial decisions.
+
+
+**One thing before saving:** replace:
+
+```text
+https://frontend-challenge-1-delta.vercel.app/
+```
+
+with your actual Vercel URL.
