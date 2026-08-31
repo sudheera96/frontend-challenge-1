@@ -253,8 +253,8 @@ The original challenge focuses on:
 
 Documentation Links:
 
-* The original challenge documentation remains available in: RUBRIC.md
-* The application design documentation is available in: DESIGN.md
+* The original challenge documentation remains available in: [RUBRIC.md](./RUBRIC.md)
+* The application design documentation is available in: [DESIGN.md](./DESIGN.md)
 
 Note: The WebMCP functionality was added as an extension of the original healthcare claims application for the WebMCP Challenge.
 
@@ -268,7 +268,7 @@ Note: The WebMCP functionality was added as an extension of the original healthc
 | Deployment | Vercel |
 
 ## Project Structure
-
+```
 frontend-challenge-1/
 │
 ├── backend/
@@ -295,6 +295,7 @@ frontend-challenge-1/
 ├── LICENSE
 ├── README.md
 └── RUBRIC.md
+```
 
 ## Running Locally## Prerequisites
 
@@ -359,7 +360,7 @@ Successfully returned: Billed/Allowed/Paid amounts, Average/Minimum/Maximum/Tota
 Successfully returned: Provider information, claim count, total billed, total allowed, total paid, average allowed, and procedure information.
 
 ## Design Documentation
-For a detailed explanation of the application's architecture and functionality, see DESIGN.md. It covers:
+For a detailed explanation of the application's architecture and functionality, see [DESIGN.md](./DESIGN.md)
 
 * Application architecture & flow
 * Frontend structure & routing
@@ -369,7 +370,7 @@ For a detailed explanation of the application's architecture and functionality, 
 * Deployment & future enhancements
 
 ## Open Source
-This project is released under the MIT License. See LICENSE.
+This project is released under the MIT License. See [LICENSE](./LICENSE)
 
 ## Hackathon Goal
 This project explores how healthcare applications can become more useful when they are designed for both humans and AI agents. The goal is not simply to add an AI interface to an existing healthcare application.
@@ -402,10 +403,7 @@ This project uses sample healthcare claims data for demonstration purposes.
 It is a technical demonstration and should not be used as a source for real-world medical, insurance, billing, or financial decisions.
 
 
-**One thing before saving:** replace:
+## Live Demo
 
-```text
-https://frontend-challenge-1-delta.vercel.app/
-```
+[Live Demo](https://frontend-challenge-1-delta.vercel.app)
 
-with your actual Vercel URL.
