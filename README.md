@@ -16,7 +16,7 @@ The application is deployed on Vercel and can be tested using a WebMCP-enabled b
 
 ---
 
-# ## Why WebMCP is a Strong Fit
+## Why WebMCP is a Strong Fit
 
 Healthcare price transparency is a strong fit for WebMCP because users often need to search, compare, and summarize structured pricing information rather than simply browse a webpage. Traditional web interfaces are designed primarily for humans, requiring an AI agent to understand the interface and determine how to perform these tasks.
 
@@ -397,4 +397,7 @@ It is a technical demonstration and should not be used as a source for real-worl
 ## Live Demo
 
 [Live Demo](https://youtu.be/iwQJJwHI-lQ)
+
+## License
+MIT
 
